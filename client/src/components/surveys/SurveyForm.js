@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 import SurveyField from './SurveyField';
+import validateEmails from '../../utils/validateEmails';
 
 const FIELDS = [
     {label: 'Survey Title', name: 'title'},
@@ -45,9 +46,14 @@ class SurveyForm extends Component {
 function validate(values) {
     const errors = {};
 
-    if (!values.title) {
-        errors.title ='You must provide a title';
-    }
+    // if no emails exist, validate email will take in an empty string - this is because redux form does an initial validation when first run
+    errors.emails = validateEmails(values.emails || '');
+
+    _.each(FIELDS, ({ name }) => {
+        if (!values[name]) {
+            errors[name] = 'You provide a value';
+        }
+    });
 
     return errors;
 }
