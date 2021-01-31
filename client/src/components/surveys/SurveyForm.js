@@ -41,7 +41,7 @@ function validate(values) {
     const errors = {};
 
     // if no emails exist, validate email will take in an empty string - this is because redux form does an initial validation when first run
-    errors.emails = validateEmails(values.emails || '');
+    errors.recipients = validateEmails(values.recipients || '');
 
     _.each(formFields, ({ name }) => {
         if (!values[name]) {
